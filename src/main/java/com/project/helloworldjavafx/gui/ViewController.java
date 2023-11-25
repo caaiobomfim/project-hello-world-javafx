@@ -1,47 +1,55 @@
 package com.project.helloworldjavafx.gui;
 
-import com.project.helloworldjavafx.gui.util.Alerts;
-import com.project.helloworldjavafx.gui.util.Constraints;
+import com.project.helloworldjavafx.model.entities.Person;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewController implements Initializable {
-
     @FXML
-    private TextField txtFirstNumber;
+    private ComboBox<Person> comboBoxPerson;
     @FXML
-    private TextField txtSecondNumber;
+    private Button btnAll;
+    private ObservableList<Person> observableList;
     @FXML
-    private Label lblResult;
-    @FXML
-    private Button btnSum;
-
-    @FXML
-    public void onBtnSumAction(){
-        try {
-            Locale.setDefault(Locale.US);
-            double firstNumber = Double.parseDouble(txtFirstNumber.getText());
-            double secondNumber = Double.parseDouble(txtSecondNumber.getText());
-            double sum = firstNumber + secondNumber;
-            lblResult.setText(String.format("%.2f", sum));
-        } catch (NumberFormatException e){
-            Alerts.showAlert("Error", "Parse error", e.getMessage(), Alert.AlertType.ERROR);
+    public void onBtnAllAction(){
+        for (Person person : comboBoxPerson.getItems()){
+            System.out.println(person);
         }
+    }
+    @FXML
+    public void onComboBoxPersonAction(){
+        Person person = comboBoxPerson.getSelectionModel().getSelectedItem();
+        System.out.println(person);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Constraints.setTextFieldDouble(txtFirstNumber);
-        Constraints.setTextFieldDouble(txtSecondNumber);
-        Constraints.setTextFieldMaxLength(txtFirstNumber, 10);
-        Constraints.setTextFieldMaxLength(txtSecondNumber, 10);
+        List<Person> list = new ArrayList<>();
+        list.add(new Person(1, "Maria", "maria@mail.com"));
+        list.add(new Person(2, "Lucas", "lucas@mail.com"));
+        list.add(new Person(3, "Giulia", "giulia@mail.com"));
+        observableList = FXCollections.observableArrayList(list);
+        comboBoxPerson.setItems(observableList);
+        Callback<ListView<Person>, ListCell<Person>> factory = lv -> new ListCell<Person>(){
+            @Override
+            protected void updateItem(Person item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+        comboBoxPerson.setCellFactory(factory);
+        comboBoxPerson.setButtonCell(factory.call(null));
     }
 }
