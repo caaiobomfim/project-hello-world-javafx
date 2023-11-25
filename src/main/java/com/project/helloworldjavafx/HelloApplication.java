@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
 
+    private static Scene mainScene;
+
     @Override
     public void start(Stage stage) {
         try {
@@ -17,13 +19,17 @@ public class HelloApplication extends Application {
             ScrollPane scrollPane = fxmlLoader.load();
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
-            Scene scene = new Scene(scrollPane);
-            stage.setScene(scene);
+            mainScene = new Scene(scrollPane);
+            stage.setScene(mainScene);
             stage.setTitle("Sample JavaFX Application");
             stage.show();
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static Scene getMainScene(){
+        return mainScene;
     }
 
     public static void main(String[] args) {
