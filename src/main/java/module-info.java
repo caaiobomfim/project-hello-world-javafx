@@ -7,6 +7,4 @@ module com.project.helloworldjavafx {
             
     opens com.project.helloworldjavafx to javafx.fxml;
     exports com.project.helloworldjavafx;
-    exports com.project.helloworldjavafx.gui;
-    opens com.project.helloworldjavafx.gui;
 }
