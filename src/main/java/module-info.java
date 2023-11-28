@@ -6,5 +6,7 @@ module com.project.helloworldjavafx {
                         requires org.kordamp.bootstrapfx.core;
             
     opens com.project.helloworldjavafx to javafx.fxml;
+    opens com.project.helloworldjavafx.model.entities;
     exports com.project.helloworldjavafx;
+    exports com.project.helloworldjavafx.model.entities;
 }
