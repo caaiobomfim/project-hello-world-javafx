@@ -1,20 +1,20 @@
 package com.project.helloworldjavafx.model.services;
 
 import com.project.helloworldjavafx.model.dao.DaoFactory;
-import com.project.helloworldjavafx.model.dao.DepartmentDao;
-import com.project.helloworldjavafx.model.entities.Department;
+import com.project.helloworldjavafx.model.dao.SellerDao;
+import com.project.helloworldjavafx.model.entities.Seller;
 
 import java.util.List;
 
-public class DepartmentService {
+public class SellerService {
 
-    private DepartmentDao dao = DaoFactory.createDepartmentDao();
+    private SellerDao dao = DaoFactory.createSellerDao();
 
-    public List<Department> findAll() {
+    public List<Seller> findAll() {
         return dao.findAll();
     }
 
-    public void saveOrUpdate(Department obj) {
+    public void saveOrUpdate(Seller obj) {
         if (obj.getId() == null) {
             dao.insert(obj);
         }
@@ -23,7 +23,7 @@ public class DepartmentService {
         }
     }
 
-    public void remove(Department obj) {
+    public void remove(Seller obj) {
         dao.deleteById(obj.getId());
     }
 }
